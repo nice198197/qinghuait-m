@@ -2,26 +2,6 @@
     <!--  滚动区域 -->
     <div class="wrapper" ref="wrapper">
         <div class="content">
-            <!-- 轮播图 -->
-            <swiper :options="swiperOption" ref="mySwiper" class="swiper">  
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner1.png">
-                    </router-link>
-                </swiper-slide> 
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner2.png">
-                    </router-link>
-                </swiper-slide> 
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner3.png">
-                    </router-link>
-                </swiper-slide> 
-                <!-- 轮播小圆点 -->  
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper> 
             <ul class="list">
                 <li v-for="list in lists">
                     <div class="list-img">
@@ -38,24 +18,12 @@
 
 <script type="text/ecmascript-6">
     import BScroll from 'better-scroll'
-    import { swiper, swiperSlide } from 'vue-awesome-swiper' 
 
     const ERR_OK = 0;
+
     export default {
         data () {
             return {
-                swiperOption: {
-                    autoplay: {
-                        delay: 3000,
-                        disableOnInteraction: false
-                    },
-                    direction: 'horizontal',
-                    loop: true,
-                    notNextTick: true,
-                    pagination: { 
-                        el: '.swiper-pagination'
-                    }  
-                },
                 lists: [
                     
                 ] 
@@ -66,6 +34,7 @@
             this.$http.get(url).then((res) => {
                 res = res.body;
                 if (res.errno === ERR_OK) {
+                    console.log(res)
                     this.lists = res.data;
                     this.$nextTick(() => {
                         this.scroll = new BScroll(this.$refs.wrapper, {
@@ -76,14 +45,13 @@
             });
         },
         mounted () {
-
+           
         },
         methods: {
 
         },
         components: {
-            swiper,  
-            swiperSlide  
+           
         }
     }
 </script>
@@ -92,11 +60,6 @@
     @import '../../common/stylus/mixin.styl'
     .wrapper
         wrapper-absolute()
-        .swiper
-            width 100%
-            img 
-                width 100%
-                height 100%
         .list
             li
                 display flex

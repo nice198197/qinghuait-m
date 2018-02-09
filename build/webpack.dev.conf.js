@@ -13,6 +13,9 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+const appData = require('../data.json')
+const homeList = appData.homeList
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -22,6 +25,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    before(app) {
+      app.get('/api/homeList', function(req, res) {
+        res.json({
+          errno: 0,
+          data: homeList
+        })
+      });
+    },
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [

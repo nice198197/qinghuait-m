@@ -37,16 +37,18 @@
 </script>
 
 <style lang="stylus" scoped>
-    @import '../../common/stylus/variable.styl';
+    @import '../../common/stylus/variable.styl'
     .page-cover
         position fixed
         top 0
         left 0
         right 0
         bottom 0
-        background #999
+        background rgba(0,0,0,.3)
+        z-index 8
     .header
-        position relative
+        position fixed
+        width 100%
         height 60px
         line-height 60px
         background $bg-theme

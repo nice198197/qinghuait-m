@@ -1,0 +1,54 @@
+{
+  "homeList": [
+    {
+      "title": "标题1",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题2",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题3",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题4",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题5",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题6",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题7",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题8",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题9",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    },
+    {
+      "title": "标题10",
+      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
+      "content":"这是一段描述性的文字信息"
+    }
+  ]
+}

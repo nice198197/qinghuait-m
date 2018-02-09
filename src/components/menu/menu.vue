@@ -25,7 +25,8 @@
             return {
                 menus: [
                     {'title':'首页','link':'/home'},
-                    {'title':'关于我们','link':'/aboutUs'}
+                    {'title':'关于我们','link':'/aboutUs'},
+                    {'title':'新闻列表','link':'/news'}
                 ]
             }
         },
@@ -47,14 +48,14 @@
         bottom 0
         width 250px
         left -250px
-        z-index 9
+        z-index 999
         background #2F4056
         transition all .3s ease
         &.show
             transform translateX(250px)
         .menu-header
             text-align center
-            padding 60px 0 10px 0
+            padding 60px 0
             img 
                 width 100px
                 height 100px
@@ -64,8 +65,9 @@
             a
                 display block
                 padding-left 40px
-                height 35px
-                line-height 35px
+                height 40px
+                line-height 40px
+                color #fff
 
         
  
