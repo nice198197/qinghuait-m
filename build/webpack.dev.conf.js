@@ -15,6 +15,7 @@ const PORT = process.env.PORT && Number(process.env.PORT)
 
 const appData = require('../data.json')
 const homeList = appData.homeList
+const total = appData.total
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -26,9 +27,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     before(app) {
-      app.get('/api/homeList', function(req, res) {
+      app.post('/api/homeList', function(req, res) {
         res.json({
           errno: 0,
+          total: total,
           data: homeList
         })
       });

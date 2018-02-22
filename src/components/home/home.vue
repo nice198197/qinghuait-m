@@ -1,90 +1,116 @@
 <template>
-    <!--  滚动区域 -->
-    <div class="wrapper" ref="wrapper">
-        <div class="content">
-            <!-- 轮播图 -->
-            <swiper :options="swiperOption" ref="mySwiper" class="swiper">  
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner1.png">
-                    </router-link>
-                </swiper-slide> 
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner2.png">
-                    </router-link>
-                </swiper-slide> 
-                <swiper-slide>
-                    <router-link to="">
-                        <img src="./banner3.png">
-                    </router-link>
-                </swiper-slide> 
-                <!-- 轮播小圆点 -->  
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper> 
-            <ul class="list">
-                <li v-for="list in lists">
-                    <div class="list-img">
-                        <img :src="list.avatar">
+    <div class="wrapper">
+        <cube-scroll 
+            ref="scroll"
+            :options="options"
+            @pulling-down="onPullingDown"
+            @pulling-up="onPullingUp">
+            <cube-slide :data="slides"/>
+            <ul>
+                <li v-for="item in lists" class="list">
+                    <div class="list-left">
+                        <img :src="item.avatar">
                     </div>
-                    <div class="list-text">
-                        <p>{{list.content}}</p>
+                    <div class="list-right">
+                        <p>{{item.title}}</p>
+                        <p>{{item.content}}</p>
                     </div>
                 </li>
             </ul>
-        </div>
+        </cube-scroll>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
-    import BScroll from 'better-scroll'
-    import { swiper, swiperSlide } from 'vue-awesome-swiper' 
-
-    const ERR_OK = 0;
     export default {
-        data () {
+        data() {
             return {
-                swiperOption: {
-                    autoplay: {
-                        delay: 3000,
-                        disableOnInteraction: false
+                curentPage: 1,
+                pageSize: 9,
+                dataMore: true,
+                slides: [
+                    {
+                        url: 'http://www.baidu.com/',
+                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide01.png'
                     },
-                    direction: 'horizontal',
-                    loop: true,
-                    notNextTick: true,
-                    pagination: { 
-                        el: '.swiper-pagination'
-                    }  
-                },
-                lists: [
-                    
-                ] 
+                    {
+                        url: 'http://www.didichuxing.com/',
+                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide02.png'
+                    },
+                    {
+                        url: 'http://www.didichuxing.com/',
+                        image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide03.png'
+                    }
+                ],
+                lists: [],
+                options: {
+                    pullDownRefresh: {
+                        threshold: 50,
+                        stop: 40,
+                        txt: '刷新成功'
+                    },
+                    pullUpLoad: {
+                        threshold: 0,
+                        txt: {
+                            more: '加载更多',
+                            noMore: '-End-到底了'
+                        }
+                    }
+                },      
             }
         },
         created() {
-            const url = '/api/homeList';
-            this.$http.get(url).then((res) => {
-                res = res.body;
-                if (res.errno === ERR_OK) {
-                    this.lists = res.data;
-                    this.$nextTick(() => {
-                        this.scroll = new BScroll(this.$refs.wrapper, {
-                            click: true
-                        });
-                    });
-                }
-            });
+            this.$http.post('/api/homeList',{curentPage:this.curentPage,pageSize:this.pageSize}).then(function(res) {
+                this.lists = res.body.data
+                this.hasMore(res)
+            },function() {
+                const toast = this.$createToast({
+                    time: 1000,
+                    txt: '数据加载异常，请刷新重试',
+                    mask: true
+                }).show()
+            })
         },
-        mounted () {
-
+        computed: {
+            
         },
         methods: {
-
+            // 上拉刷新
+            onPullingDown() {
+                // 更新数据
+                setTimeout(() => {
+                    this.$http.post('/api/homeList',{curentPage:this.curentPage,pageSize:this.pageSize}).then(function(res) {
+                        this.lists =res.body.data
+                        this.$refs.scroll.forceUpdate()
+                    },function() {
+                        this.$refs.scroll.forceUpdate()
+                    })  
+                }, 1000)
+            },
+            // 下拉加载
+            onPullingUp() {
+                // 没有更多数据则不滚动
+                if (!this.dataMore) {
+                    this.$refs.scroll.forceUpdate()
+                    return
+                }
+                this.curentPage ++
+                this.$http.post('/api/homeList',{curentPage:this.curentPage,pageSize:this.pageSize}).then(function(res) {
+                    this.hasMore(res)
+                    this.lists = this.lists.concat(res.body.data)
+                    this.$refs.scroll.forceUpdate()
+                },function() {
+                    this.$refs.scroll.forceUpdate()
+                })
+            },
+            // 判断是否还有更多数据
+            hasMore(res) {
+                let totalLen = Math.ceil(res.body.total/this.pageSize)
+                if (this.curentPage === totalLen) {
+                    this.dataMore = false
+                }  
+            }
         },
-        components: {
-            swiper,  
-            swiperSlide  
-        }
     }
 </script>
 
@@ -92,25 +118,22 @@
     @import '../../common/stylus/mixin.styl'
     .wrapper
         wrapper-absolute()
-        .swiper
-            width 100%
+    .cube-slide
+        height auto
+    .list
+        display flex
+        .list-left
+            width 50px
+            height 50px
+            padding 10px
             img 
                 width 100%
                 height 100%
-        .list
-            li
-                display flex
-                padding 15px
-                .list-img
-                    flex 0 0 62px
-                    width 62px
-                    height 62px
-                    margin-right 20px
-                    img 
-                        width 100%
-                        height 100%
-                .list-text
-                    display flex
-                    flex 1
-                    align-items center
+        .list-right
+            flex 1
+            display flex
+            padding 10px
+            align-items center
+        
+            
 </style>

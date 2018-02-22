@@ -2,13 +2,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource';
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-
-
-Vue.use(VueAwesomeSwiper)
+import Cube from 'cube-ui'
+ 
+Vue.use(Cube)
 Vue.use(VueResource)
 
-import 'swiper/dist/css/swiper.css'
 import '@/common/stylus/index.styl'
 
 Vue.config.productionTip = false

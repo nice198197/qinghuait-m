@@ -2,10 +2,13 @@
     <div>
         <div class="page-cover" v-show="show" @click="isShow"></div>
         <div class="header" :class="{'show': show}">
-            <div class="pull-left" @click="isShow">
-                <i class="iconfont icon-fenlei"></i>
+            <div class="pull-left">
+                logo
             </div>
             <div class="title">{{pageTtile}}</div>
+            <div class="pull-right" @click="isShow">
+                <i class="iconfont icon-user"></i>
+            </div>
         </div>
         <menuList @change="changeShow" :toShow='show'></menuList>
     </div>
@@ -48,7 +51,8 @@
         z-index 8
     .header
         position fixed
-        width 100%
+        left 0
+        right 0 
         height 60px
         line-height 60px
         background $bg-theme
@@ -64,4 +68,12 @@
                 font-size $font-size-lg
         .title
             text-align center
+        .pull-right
+            position absolute
+            right 0
+            top 0
+            padding 0 10px
+            .iconfont
+                font-size $font-size-lg
+
 </style>

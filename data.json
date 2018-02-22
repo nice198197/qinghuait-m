@@ -1,4 +1,5 @@
 {
+  "total": 9,
   "homeList": [
     {
       "title": "标题1",
@@ -42,11 +43,6 @@
     },
     {
       "title": "标题9",
-      "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
-      "content":"这是一段描述性的文字信息"
-    },
-    {
-      "title": "标题10",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "content":"这是一段描述性的文字信息"
     }
